@@ -11,23 +11,20 @@
 #include <sys/queue.h>
 #include <errno.h>
 #include <netdb.h>
+#include "b64.h"
 
 const size_t MAXINT=65536;
-char* trim(char* instr,char tflag,int num);
-int checkvalidfile(const char* fname, int maxlen);
-
-struct fdata {
-        char fpath[65536];
-        CIRCLEQ_ENTRY(fdata) entries;
-};
-
-struct conversions {
-        size_t b64size;
-        size_t binsize;
-        char* b64data;
-        char* bindata;
-};
 
 void main(int argc,char argv[])
 {
+	size_t alphalen = 65;
+	char* disp = malloc(MAXINT);
+	for(int i = 0; i < alphalen; i++)
+        {
+	        char* e = b64dict[i];
+		snprintf(disp,255,"%s",e);
+		puts(disp);
+		
+        }
 
+}
