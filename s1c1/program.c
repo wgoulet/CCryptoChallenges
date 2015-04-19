@@ -60,21 +60,94 @@ void main(int argc,char* argv[])
 		struct b64chunk* chunk = malloc(sizeof(struct b64chunk));
 		bzero(chunk,sizeof(struct b64chunk));
 		int numb = fread(chunk,1,3,fp);
-                if(numb < 3)
+		int char1 = 0;
+		int char2 = 0;
+		int char3 = 0;
+		int char4 = 0;
+                if((numb < 3) && (numb > 0))
                 {
-			//snprintf(disp,255,"Bytes padding: %d",numb);
-			for(int j = 0; j < numb; j++)
+			switch(numb)
 			{
-				putchar('=');
-				charct++;
+				case 1:
+					char1 += chunk->f8;
+					char1 = char1 << 1;
+					char1 += chunk->f7;
+					char1 = char1 << 1;
+					char1 += chunk->f6;
+					char1 = char1 << 1;
+					char1 += chunk->f5;
+					char1 = char1 << 1;
+					char1 += chunk->f4;
+					char1 = char1 << 1;
+					char1 += chunk->f3;
+					snprintf(disp,255,"%d",b64lookup[char1].encoding);
+					putchar(b64lookup[char1].encoding);
+					char2 += chunk->f2;
+					char2 = char2 << 1;
+					char2 += chunk->f1;
+					char2 = char2 << 1;
+					char2 += chunk->f16;
+					char2 = char2 << 1;
+					char2 += chunk->f15;
+					char2 = char2 << 1;
+					char2 += chunk->f14;
+					char2 = char2 << 1;
+					char2 += chunk->f13;
+					snprintf(disp,255,"%d",b64lookup[char2].encoding);
+					putchar(b64lookup[char2].encoding);
+					putchar('=');
+					putchar('=');
+					break;
+				case 2:
+					char1 += chunk->f8;
+                                        char1 = char1 << 1;
+                                        char1 += chunk->f7;
+                                        char1 = char1 << 1;
+                                        char1 += chunk->f6;
+                                        char1 = char1 << 1;
+                                        char1 += chunk->f5;
+                                        char1 = char1 << 1;
+                                        char1 += chunk->f4;
+                                        char1 = char1 << 1;
+                                        char1 += chunk->f3;
+                                        snprintf(disp,255,"%d",b64lookup[char1].encoding);
+                                        putchar(b64lookup[char1].encoding);
+                                        char2 += chunk->f2;
+                                        char2 = char2 << 1;
+                                        char2 += chunk->f1;
+                                        char2 = char2 << 1;
+                                        char2 += chunk->f16;
+                                        char2 = char2 << 1;
+                                        char2 += chunk->f15;
+                                        char2 = char2 << 1;
+                                        char2 += chunk->f14;
+                                        char2 = char2 << 1;
+                                        char2 += chunk->f13;
+                                        snprintf(disp,255,"%d",b64lookup[char2].encoding);
+                                        putchar(b64lookup[char2].encoding);
+					char3 += chunk->f12;
+					char3 = char3 << 1;
+					char3 += chunk->f11;
+					char3 = char3 << 1;
+					char3 += chunk->f10;
+					char3 = char3 << 1;
+					char3 += chunk->f9;
+					char3 = char3 << 1;
+					char3 += chunk->f24;
+					char3 = char3 << 1;
+					char3 += chunk->f23;
+					snprintf(disp,255,"%d",b64lookup[char3].encoding);
+					putchar(b64lookup[char3].encoding);
+					putchar('=');
+					break;
 			}
+
 			break;
 		}
 		// construct 6 bit values by adding
 		// each field value to an int, shifting left
 		// after each add
                 
-		int char1 = 0;
 		char1 += chunk->f8;
 		char1 = char1 << 1;
 		char1 += chunk->f7;
@@ -90,7 +163,6 @@ void main(int argc,char* argv[])
 		putchar(b64lookup[char1].encoding);
 		charct++;
 
-		int char2 = 0;
 		char2 += chunk->f2;
 		char2 = char2 << 1;
 		char2 += chunk->f1;
@@ -106,7 +178,6 @@ void main(int argc,char* argv[])
 		putchar(b64lookup[char2].encoding);
 		charct++;
 
-		int char3 = 0;
 		char3 += chunk->f12;
 		char3 = char3 << 1;
 		char3 += chunk->f11;
@@ -122,7 +193,6 @@ void main(int argc,char* argv[])
 		putchar(b64lookup[char3].encoding);
 		charct++;
 
-		int char4 = 0;
 		char4 += chunk->f22;
 		char4 = char4 << 1;
 		char4 += chunk->f21;
