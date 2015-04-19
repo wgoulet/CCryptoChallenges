@@ -42,11 +42,8 @@ void main(int argc,char* argv[])
 			enc++;
 			// store the char in the encoding
 			b64lookup[i].encoding = *enc;
-			//memcpy(&b64lookup[i].encoding,enc,strnlen(enc,MAXSTR));
-			////free(enc);
 		}
 		
-		//snprintf(disp,255,"%d -> %c",b64lookup[i].value,b64lookup[i].encoding);
         }
 
 	FILE* fp = fopen(argv[1],"r");
@@ -64,6 +61,15 @@ void main(int argc,char* argv[])
 		int char2 = 0;
 		int char3 = 0;
 		int char4 = 0;
+		// if at end of input stream and no bytes
+		// left; exit
+		if(numb == 0)
+		{
+			break;
+		}
+
+		// if we have less than a full chunk of
+		// data remaining, perform padding.
                 if((numb < 3) && (numb > 0))
                 {
 			switch(numb)
@@ -147,7 +153,8 @@ void main(int argc,char* argv[])
 		// construct 6 bit values by adding
 		// each field value to an int, shifting left
 		// after each add
-                
+
+               	// swap order of LSB when reading data from file 
 		char1 += chunk->f8;
 		char1 = char1 << 1;
 		char1 += chunk->f7;
@@ -214,7 +221,7 @@ void main(int argc,char* argv[])
 			puts("");
 		}
 		free(chunk);
-	}	
+	}
 	free(disp);
 	puts("");
 }
